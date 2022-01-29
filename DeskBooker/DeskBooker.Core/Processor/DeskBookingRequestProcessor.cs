@@ -1,5 +1,5 @@
-﻿using System;
-using DeskBooker.Core.Domain;
+﻿using DeskBooker.Core.Domain;
+using System;
 
 namespace DeskBooker.Core.Processor
 {
