@@ -1,4 +1,5 @@
 ﻿using System;
+using DeskBooker.Core.Domain;
 using Xunit;
 
 namespace DeskBooker.Core.Processor
