@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DeskBooker.Core.DataInterface;
 using DeskBooker.Core.Domain;
 using Moq;
@@ -24,7 +25,7 @@ namespace DeskBooker.Core.Processor
                 Email = "muratilgun34@gmail.com",
                 Date = DateTime.Now
             };
-             _availableDesks = new List<Desk> { new Desk() };
+             _availableDesks = new List<Desk> { new Desk {Id = 7} };
              _deskBookingRepositoryMock = new Mock<IDeskBookingRepository>();
              _deskRepositoryMock = new Mock<IDeskRepository>();
              _deskRepositoryMock.Setup(x => x.GetAvailableDesks(_request.Date)).Returns(_availableDesks);
@@ -73,6 +74,7 @@ namespace DeskBooker.Core.Processor
             Assert.Equal(_request.LastName,saveDeskBooking.LastName);
             Assert.Equal(_request.Email,saveDeskBooking.Email);
             Assert.Equal(_request.Date,saveDeskBooking.Date);
+            Assert.Equal(_availableDesks.First().Id,saveDeskBooking.DeskId);
         }
 
         [Fact]
