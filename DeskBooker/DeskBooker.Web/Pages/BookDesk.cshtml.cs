@@ -2,7 +2,6 @@
 using DeskBooker.Core.Processor;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
 namespace DeskBooker.Web.Pages
 {
     public class BookDeskModel : PageModel
@@ -20,7 +19,12 @@ namespace DeskBooker.Web.Pages
         {
             if (ModelState.IsValid)
             {
-                _deskBookingRequestProcessor.BookDesk(DeskBookingRequest);
+                var result = _deskBookingRequestProcessor.BookDesk(DeskBookingRequest);
+                if (result.Code == DeskBookingResultCode.NoDeskAvailable)
+                {
+                    ModelState.AddModelError("DeskBookingRequest.Date", "No desk available for selected date");
+
+                }
 
             }
         }
