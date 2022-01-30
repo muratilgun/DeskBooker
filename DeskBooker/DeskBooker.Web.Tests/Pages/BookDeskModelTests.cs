@@ -11,8 +11,10 @@ namespace DeskBooker.Web.Pages
 {
   public class BookDeskModelTests
   {
-      [Fact]
-      public void ShouldCallBookDeskMethodOfProcessor()
+      [Theory]
+      [InlineData(1,true)]
+      [InlineData(0,false)]
+      public void ShouldCallBookDeskMethodOfProcessorIfModelIsValid(int expectedBookDeskCalls,bool isModelValid)
       {
           var processorMock = new Mock<IDeskBookingRequestProcessor>();
 
@@ -20,9 +22,12 @@ namespace DeskBooker.Web.Pages
           {
               DeskBookingRequest = new DeskBookingRequest()
           };
-
+          if (!isModelValid)
+          {
+              bookDeskModel.ModelState.AddModelError("JustAKey","AnErrorMessage");
+          }
           bookDeskModel.OnPost();
-          processorMock.Verify(z=> z.BookDesk(bookDeskModel.DeskBookingRequest),Times.Once);
+          processorMock.Verify(z=> z.BookDesk(bookDeskModel.DeskBookingRequest),Times.Exactly(expectedBookDeskCalls));
       }
   }
 }
