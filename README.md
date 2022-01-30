@@ -1,5 +1,6 @@
 # **Test Driven Development**
 TDD’de öncelikle Gereksimler(requirements) belirlenir ve küçük parçalar halinde ayrılır.
+
 <img src="https://i.ibb.co/QNPMGBn/1.png" alt="1" border="0"  width="359" height="300"><img src="https://i.ibb.co/KzFdFP0/2.png" alt="2" border="0"  width="359" height="300">
 
 Daha sonra, implementasyondan önce bir test yazılır, Business kurallarını tam olarak belirlemediğimiz için bu test başarısız olur. Ancak test, kodunuzun gereksinimi karşılamak için ne yapması gerektiğini zaten açıklar. Bir sonraki adım testi geçmek için gerekli olan kodları yazmak olur. Başarılı olan testten sonra kodlarda iyileştirme yapılarak tekrar düzenlenir.
