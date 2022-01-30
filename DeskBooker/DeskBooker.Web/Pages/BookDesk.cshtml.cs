@@ -5,42 +5,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DeskBooker.Web.Pages
 {
-  public class BookDeskModel : PageModel
-  {
-    private IDeskBookingRequestProcessor _deskBookingRequestProcessor;
-
-    public BookDeskModel(IDeskBookingRequestProcessor deskBookingRequestProcessor)
+    public class BookDeskModel : PageModel
     {
-      _deskBookingRequestProcessor = deskBookingRequestProcessor;
-    }
-
-    [BindProperty]
-    public DeskBookingRequest DeskBookingRequest { get; set; }
-
-    public IActionResult OnPost()
-    {
-      IActionResult actionResult = Page();
-
-      if (ModelState.IsValid)
-      {
-        var result = _deskBookingRequestProcessor.BookDesk(DeskBookingRequest);
-        if (result.Code == DeskBookingResultCode.Success)
+        private readonly IDeskBookingRequestProcessor _deskBookingRequestProcessor;
+        public BookDeskModel(IDeskBookingRequestProcessor deskBookingRequestProcessor)
         {
-          actionResult = RedirectToPage("BookDeskConfirmation", new
-          {
-            result.DeskBookingId,
-            result.FirstName,
-            result.Date
-          });
+            _deskBookingRequestProcessor = deskBookingRequestProcessor;
         }
-        else if (result.Code == DeskBookingResultCode.NoDeskAvailable)
-        {
-          ModelState.AddModelError("DeskBookingRequest.Date",
-            "No desk available for selected date");
-        }
-      }
 
-      return actionResult;
+        [BindProperty]
+        public DeskBookingRequest DeskBookingRequest { get; set; }
+
+        public void OnPost()
+        {
+            _deskBookingRequestProcessor.BookDesk(DeskBookingRequest);
+        }
     }
-  }
 }
