@@ -67,5 +67,28 @@ namespace DeskBooker.Web.Pages
 
             Assert.DoesNotContain("DeskBookingRequest.Date", _bookDeskModel.ModelState);
         }
+
+        [Theory]
+        [InlineData(typeof(PageResult),false,null)]
+        [InlineData(typeof(PageResult),true,DeskBookingResultCode.NoDeskAvailable)]
+        [InlineData(typeof(RedirectToPageResult),true,DeskBookingResultCode.Success)]
+        public void ShouldReturnExpectedActionResult(Type expectedActionResultTpye, bool isModelValid,
+            DeskBookingResultCode? deskBookingResultCode)
+        {
+            if (!isModelValid)
+            {
+                _bookDeskModel.ModelState.AddModelError("JustAKey","AnErrorMessage");
+            }
+
+            if (deskBookingResultCode.HasValue)
+            {
+                _deskBookingResult.Code = deskBookingResultCode.Value;
+            }
+
+            IActionResult actionResult = _bookDeskModel.OnPost();
+
+
+            Assert.IsType(expectedActionResultTpye,actionResult);
+        }
     }
 }

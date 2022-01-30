@@ -15,7 +15,7 @@ namespace DeskBooker.Web.Pages
         [BindProperty]
         public DeskBookingRequest DeskBookingRequest { get; set; }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
@@ -25,8 +25,9 @@ namespace DeskBooker.Web.Pages
                     ModelState.AddModelError("DeskBookingRequest.Date", "No desk available for selected date");
 
                 }
-
             }
+
+            return null;
         }
     }
 }
